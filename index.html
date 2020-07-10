@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Consumo Vehicular</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form">
+				<span class="contact100-form-title">
+					Calcula tu consumo vehicular
+				</span>
+
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Ciudad de origen</span>
+					<div>
+						<select id=origen class="selection-2" name="service" onsubmit="">
+							<option value="ubicacion">Ubicacion actual</option>
+							<option value="Arica">Arica</option>
+							<option value="Antofagasta">Antofagasta</option>
+							<option value="Iquique">Iquique</option>
+							<option value="Copiapo">Copiapó</option>
+							<option value="La Serena">La Serena</option>
+							<option value="Valparaíso">Valparaíso</option>
+							<option value="Rancagua">Rancagua</option>
+							<option value="Talca">Talca</option>
+							<option value="Concepción">Concepción</option>
+							<option value="Temuco">Temuco</option>
+							<option value="Valdivia">Valdivia</option>
+							<option value="Puerto Montt">Puerto Montt</option>
+							<option value="Coyhaique">Coyhaique</option>
+							<option value="Punta Arenas">Punta Arenas</option>
+							<option value="Santiago">Santiago</option>
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Ciudad de destino</span>
+					<div>
+						<select id=destino class="selection-2" name="budget">
+							<option value="ubicacion">Ubicacion actual</option>
+							<option value="Arica">Arica</option>
+							<option value="Antofagasta">Antofagasta</option>
+							<option value="Iquique">Iquique</option>
+							<option value="Copiapo">Copiapó</option>
+							<option value="La Serena">La Serena</option>
+							<option value="Valparaíso">Valparaíso</option>
+							<option value="Rancagua">Rancagua</option>
+							<option value="Talca">Talca</option>
+							<option value="Concepción">Concepción</option>
+							<option value="Temuco">Temuco</option>
+							<option value="Valdivia">Valdivia</option>
+							<option value="Puerto Montt">Puerto Montt</option>
+							<option value="Coyhaique">Coyhaique</option>
+							<option value="Punta Arenas">Punta Arenas</option>
+							<option value="Santiago">Santiago</option>
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Selecciona tu Vehículo</span>
+					<div>
+						<select id=vehiculo class="selection-2" name="service">
+							<option value="Chevrolet Spark">Chevrolet Spark</option>
+							<option value="Fiat Cronos">Fiat Cronos</option>
+							<option value="Honda Accord">Honda Accord</option>
+							<option value="Mahindra Scorpio">Mahindra Scorpio</option>
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
+				<div class="container-contact100-form-btn">
+					<div class="wrap-contact100-form-btn">
+						<div class="contact100-form-bgbtn"></div>
+						<button id="calcular" id="abrir" class="contact100-form-btn">
+							<span>
+								Calcular
+								<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+				<div id="miModal" tabindex="-1" role="dialog">
+					<div id="flex" class="modal-dialog" role="document">
+						<div>
+							<div class="modal-body"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+
+
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/select2/select2.min.js"></script>
+	
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		//defino mis lugares
+		const lugares = {
+			'ubicacion': [-33.0502747,-71.6262814],
+			'Arica': [-18.4746, -70.29792],
+			'Antofagasta': [-23.65236, -70.3954],
+			'Iquique': [-20.21326, -70.15027],
+			'Copiapo': [-27.36679, -70.3314],
+			'La Serena': [-29.90453, -71.24894],
+			'Valparaiso': [-33.036, -71.62963],
+			'Rancagua': [-34.17083, -70.74444],
+			'Talca': [-35.4264, -71.65542],
+			'Concepcion': [-36.82699, -73.04977],
+			'Temuco': [-38.73965, -72.59842],
+			'Valdivia': [-39.81422, -73.24589],
+			'Puertomontt': [ -41.4693, -72.94237],
+			'Coyhaique': [-45.57524, -72.06619],
+			'Puntaarenas': [-53.15483, -70.91129],
+			'Santiago': [-33.45694, -70.64827],
+		}
+
+		//defino vehiculos y su kilometraje
+		const vehiculos = {
+			'Chevrolet Spark': 20.7,
+			'Fiat Cronos': 19.2,
+			'Honda Accord': 15.4,
+			'Mahindra Scorpio': 11.8,
+		}
+		//se crea nueva class vehicle
+		class Vehicle {
+			constructor(kilometros) {
+				//atributos
+				this.kilometros = kilometros;
+			}
+			calcular_gasto(kilometros) {
+				this.kilometros += kilometros;
+			}
+		}
+		//acá creamos los objetos que son instancias de nuestra classe vehicle
+		class Chevrolet extends Vehicle {
+			calcular_gasto(kilometros) {
+				const consumo=(kilometros/20.7).toFixed(2);
+				return consumo;
+			}
+		}
+		class Fiat extends Vehicle {
+			calcular_gasto(kilometros) {
+				const consumo=(kilometros/19.2).toFixed(2);
+				return consumo;
+			}	
+		}
+		class Honda extends Vehicle {
+			calcular_gasto(kilometros) {
+				const consumo=(kilometros/15.4).toFixed(2);
+				return consumo;
+			}
+		}
+		class Mahindra extends Vehicle {
+			calcular_gasto(kilometros) {
+				const consumo=(kilometros/11.8).toFixed(2);
+				return consumo;
+			}
+		}
+		let modal = document.getElementById('miModal');
+		let flex = document.getElementById('flex');
+		let calcular = document.getElementById('calcular');
+		let cerrar = document.getElementById('close');
+		
+		calcular.addEventListener('click', function(){
+			miModal.display = 'calcular';
+		});
+		
+
+
+
+		$('#calcular').on('click', function (ev) {
+			$('.miModal').modal();
+			ev.preventDefault();
+			//acá obtenemos origen y destino
+			let origen = $('#origen').val();
+			let destino = $('#destino').val();
+			let select_vehiculo = $('#vehiculo').val();
+
+			//recuperamos las coordenadas 
+			let cor_origen = lugares[origen]
+			let cor_destino = lugares[destino]
+
+			//callbacks 
+			
+			let vehiculo;
+			if (select_vehiculo == 'Chevrolet Spark') { //chevrolet gasta 20.7km
+				vehiculo = new Chevrolet(); //chevrolet clase heredada
+			} else if (select_vehiculo == 'Fiat Cronos') {
+				vehiculo = new Fiat(); 
+				
+			} else if (select_vehiculo == 'Honda Accord') {
+				vehiculo = new Honda();
+				
+			} else if (select_vehiculo == 'Mahindra Scorpio') {
+				vehiculo = new Mahindra();
+			}
+
+			//funcionamiento método fetch(promesa) con api
+			fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${cor_origen[0]},${cor_origen[1]}&destinations=${cor_destino[0]},${cor_destino[1]}&key=AIzaSyAlDSRLGoUqLzoFZQlR7wvyRoNdsufoQls`)
+			.then(function(datos) {
+				return datos.json();
+			})
+			.then(function(datos_json) {
+				let recorrido = datos_json.rows[0].elements[0].distance.value;
+				let kilometros = recorrido/1000;  				
+				const consumo=vehiculo.calcular_gasto(kilometros);
+				$('.modal-body').html(`El consumo vehicular de tu ${select_vehiculo} entre ${origen} y ${destino} es de ${kilometros} km/l.`)//defino el consumo de km
+			})
+			
+			.catch(function(error) {
+				alert(`Error: ${error}`);
+			});
+		}); 
+
+		function getLocation() {
+  			if (cor_origen == 'ubicacion') {
+    			navigator.geolocation.getCurrentPosition(showPosition);
+  			} else {
+    			x.innerHTML = "Geolocation is not supported by this browser.";
+  			}
+		}
+	</script>
+
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<script src="js/main.js"></script>
+</script>
+
+</body>
+</html>
